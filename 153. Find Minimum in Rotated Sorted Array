@@ -1,3 +1,18 @@
+In this modified version of binary search algorithm, we are looking for this point. In the above example notice the Inflection Point .
+
+All the elements to the left of inflection point > first element of the array.
+
+All the elements to the right of inflection point < first element of the array.
+
+Algorithm
+
+Find the mid element of the array.
+
+If mid element > first element of array this means that we need to look for the inflection point on the right of mid.
+
+If mid element < first element of array this means that we need to look for the inflection point on the left of mid.
+
+
 class Solution {
                 
     public int findMin(int[] nums) {
