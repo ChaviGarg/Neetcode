@@ -1,0 +1,58 @@
+
+Apply binary search
+
+
+class TimeMap {
+
+    private Map<String, List<String>> valuesMap;
+    private Map<String, List<Integer>> timestampsMap;
+
+    public TimeMap() {
+        valuesMap = new HashMap<>();
+        timestampsMap = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+        valuesMap.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
+        timestampsMap.computeIfAbsent(key, k -> new ArrayList<>()).add(timestamp);
+    }
+    
+    public String get(String key, int timestamp) {
+        List<String> values = valuesMap.get(key);
+        List<Integer> times = timestampsMap.get(key);
+        if(values == null)
+            return "";
+        int nearestTimeIdx = getNearestTimestampIdx(times, timestamp);
+        return nearestTimeIdx == -1 ? "" : values.get(nearestTimeIdx);
+    }
+
+
+    public int getNearestTimestampIdx(List<Integer> timestamps, int timestamp){
+        int index=0, result = -1;
+        int start = 0, end = timestamps.size()-1;
+        while(start <= end){
+            int mid = start + (end-start)/2;
+            int midVal = timestamps.get(mid);
+            if(midVal == timestamp)
+               return mid;
+            if(midVal < timestamp){
+                result = mid;
+                start = mid+1;
+            }else{
+                end = mid-1;
+            }
+        }
+        return result;
+    }
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.set(key,value,timestamp);
+ * String param_2 = obj.get(key,timestamp);
+ */
+
+
+// time Complexity : O(log n)
+// Space Complexity : O(n)
